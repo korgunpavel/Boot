@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Man</title>
+</head>
+<body>
+<header th:utext="${person.getFullName() + ', ' + person.getYearOfBirth()}">VALUE</header>
+
+<div th:if="${library.isEmpty()}">
+    <p>Человек пока не взял ни одной книги</p>
+</div>
+
+<section th:if="${!library.isEmpty()}">
+    <hr/>
+    <b>Книги: </b>
+    <table th:each="book:${library}">
+        <tr>
+            <td>
+                <span th:utext="${book.getTitle()} + ', ' + ${book.getAuthor()} + ', ' + ${book.getYear()}"
+                      th:style="${book.isExp()} ? 'color: red' : 'color: black'">
+                book
+                </span>
+            </td>
+        </tr>
+    </table>
+</section>
+<hr/>
+<form th:method="GET"  th:action="@{/people/{id}/edit(id=${person.getUserId()})}">
+    <input type="submit" value="Редактировать"/>
+</form>
+<form th:method="DELETE" th:action="@{/people/{id}(id=${person.getUserId()})}">
+    <input type="submit"  value="Удалить"/>
+</form>
+</body>
+</html>
